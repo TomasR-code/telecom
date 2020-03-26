@@ -1,5 +1,7 @@
 package com.telecom.telecom.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,9 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "DOMICILIO")
-public class Domicilio {
+public class Domicilio implements Serializable{
 
 
 	@Id
@@ -27,17 +31,14 @@ public class Domicilio {
 	@Column(name = "NUMERO")
 	private Integer numero;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_BARRIO")
-    private Barrio barrio;
+	//@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    //@JoinColumn(name = "ID_BARRIO")
+    //private Barrio barrio;
 	
-	@Override
-	public String toString() {
-		return "Domicilio [id=" + id + ", "
-				+ "calle=" + calle + ", "
-						+ "numero=" + numero + ", "
-								+ "barrio=" + barrio + "]";
-	}
+  	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "ID_BARRIO", nullable = false)
+    @JsonBackReference
+    private Barrio barrio;
 
 	public Long getId() {
 		return id;
@@ -70,5 +71,7 @@ public class Domicilio {
 	public void setBarrio(Barrio barrio) {
 		this.barrio = barrio;
 	}
+	
+
 
 }
