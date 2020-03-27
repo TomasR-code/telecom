@@ -14,9 +14,14 @@ public class DomicilioService {
 	@Autowired
 	DomicilioRepository domicilioRepository;
 	
-	public Optional buscarDomicilio(long id) {
+	public Optional <Domicilio> buscarDomicilio(long id) {
 		Optional<Domicilio> domicilio;
 		domicilio = domicilioRepository.findById(id);
 		return domicilio;
+	}
+
+	public Domicilio guardarDomicilio(Domicilio ba) {
+		ba = domicilioRepository.save(ba);
+		return ba;
 	}
 }
